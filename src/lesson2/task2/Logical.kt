@@ -3,6 +3,8 @@
 package lesson2.task2
 
 import lesson1.task1.sqr
+import java.util.*
+import kotlin.math.sqrt
 
 /**
  * Пример
@@ -18,7 +20,14 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  * Четырехзначное число назовем счастливым, если сумма первых двух ее цифр равна сумме двух последних.
  * Определить, счастливое ли заданное число, вернуть true, если это так.
  */
-fun isNumberHappy(number: Int): Boolean = TODO()
+fun isNumberHappy(number: Int): Boolean {
+    val first = number % 10;
+    val second = (number - first) % 100 / 10
+    val third = (number - (second * 10 - first)) % 1000 / 100
+    val fourth = number / 1000
+    println("$first $second $third $fourth")
+    return (fourth + third) == (second + first)
+}
 
 /**
  * Простая
@@ -36,7 +45,13 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = TODO()
  * Дан номер месяца (от 1 до 12 включительно) и год (положительный).
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
-fun daysInMonth(month: Int, year: Int): Int = TODO()
+fun daysInMonth(month: Int, year: Int): Int {
+    val calendar = Calendar.getInstance()
+    calendar.set(year, month-1 , 1)
+    val days = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+    println(days)
+    return days
+}
 
 /**
  * Средняя
@@ -48,7 +63,9 @@ fun daysInMonth(month: Int, year: Int): Int = TODO()
 fun circleInside(
     x1: Double, y1: Double, r1: Double,
     x2: Double, y2: Double, r2: Double
-): Boolean = TODO()
+): Boolean {
+    return sqrt(sqr(x1 - x2) + sqr(y1 - y2)) + r1 <= r2
+}
 
 /**
  * Средняя
