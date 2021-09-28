@@ -12,7 +12,7 @@ import kotlin.math.sqrt
 fun factorial(n: Int): Double {
     var result = 1.0
     for (i in 1..n) {
-        result = result * i // Please do not fix in master
+        result *= i // Please do not fix in master
     }
     return result
 }
@@ -67,7 +67,19 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    if (n < 10) {
+        return 1
+    }
+
+    var count = 0
+    var i = n
+    while (i != 0) {
+        i /= 10
+        count++
+    }
+    return count
+}
 
 /**
  * Простая
@@ -83,21 +95,52 @@ fun fib(n: Int): Int = TODO()
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
+fun lcm(m: Int, n: Int): Int {
+    var a = m
+    var b = n
+
+    while (a != 0 && b != 0) {
+        if (a > b) {
+            a %= b
+        } else {
+            b %= a
+        }
+    }
+    return m * n /(a + b)
+}
 
 /**
  * Простая
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = TODO()
+fun minDivisor(n: Int): Int {
+    var ii = 2
+    for (i in 2..n) {
+        val res = n % i
+        if (res == 0) {
+            ii = i
+            break
+        }
+    }
+    return ii
+}
 
 /**
  * Простая
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = TODO()
+fun maxDivisor(n: Int): Int = TODO() /*{
+    var ii = 1
+    for (i in 2..n) {
+        val res = n % i
+        if (res == 0) {
+            ii = i
+        }
+    }
+    return ii
+}*/
 
 /**
  * Простая
@@ -133,7 +176,19 @@ fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int): Int = TODO()
+fun collatzSteps(x: Int): Int {
+    var tmpX = x
+    var count = 0
+    while (tmpX != 1) {
+        if (tmpX % 2 == 0) {
+            tmpX /= 2
+        } else {
+            tmpX = 3 * tmpX + 1
+        }
+        count++
+    }
+    return count
+}
 
 /**
  * Средняя
