@@ -3,6 +3,7 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 /**
@@ -122,7 +123,12 @@ fun abs(v: List<Double>): Double = TODO()
  *
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
-fun mean(list: List<Double>): Double = TODO()
+fun mean(list: List<Double>): Double {
+    if (list.isEmpty()) {
+        return 0.0
+    }
+    return list.sum() / list.size
+}
 
 /**
  * Средняя
@@ -141,7 +147,16 @@ fun center(list: MutableList<Double>): MutableList<Double> = TODO()
  * представленные в виде списков a и b. Скалярное произведение считать по формуле:
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.
  */
-fun times(a: List<Int>, b: List<Int>): Int = TODO()
+fun times(a: List<Int>, b: List<Int>): Int {
+    if (a.isEmpty() || b.isEmpty()) {
+        return 0
+    }
+    var summ = 0;
+    for (i in 0 until a.size) {
+        summ += a[i] * b[i]
+    }
+    return summ
+}
 
 /**
  * Средняя
@@ -181,7 +196,24 @@ fun factorize(n: Int): List<Int> = TODO()
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  * Множители в результирующей строке должны располагаться по возрастанию.
  */
-fun factorizeToString(n: Int): String = TODO()
+fun factorizeToString(n: Int): String {
+    val result = mutableListOf<Int>()
+    if (n < Int.MAX_VALUE) {
+        var tmp = n
+        var counter = 2;
+        while (tmp > 1) {
+            if (tmp % counter == 0) {
+                result.add(counter)
+                tmp /= counter
+                counter = 2
+            }
+            counter++
+        }
+    } else {
+        result.add(Int.MAX_VALUE)
+    }
+    return result.joinToString(separator = "*")
+}
 
 /**
  * Средняя
@@ -236,7 +268,62 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String {
+    var tmp = n
+    var s = "";
+    while (tmp >= 1000) {
+        s += "M";
+        tmp -= 1000;        }
+    while (tmp >= 900) {
+        s += "CM";
+        tmp -= 900;
+    }
+    while (tmp >= 500) {
+        s += "D";
+        tmp -= 500;
+    }
+    while (tmp >= 400) {
+        s += "CD";
+        tmp -= 400;
+    }
+    while (tmp >= 100) {
+        s += "C";
+        tmp -= 100;
+    }
+    while (tmp >= 90) {
+        s += "XC";
+        tmp -= 90;
+    }
+    while (tmp >= 50) {
+        s += "L";
+        tmp -= 50;
+    }
+    while (tmp >= 40) {
+        s += "XL";
+        tmp -= 40;
+    }
+    while (tmp >= 10) {
+        s += "X";
+        tmp -= 10;
+    }
+    while (tmp >= 9) {
+        s += "IX";
+        tmp -= 9;
+    }
+    while (tmp >= 5) {
+        s += "V";
+        tmp -= 5;
+    }
+    while (tmp >= 4) {
+        s += "IV";
+        tmp -= 4;
+    }
+    while (tmp >= 1) {
+        s += "I";
+        tmp -= 1;
+    }
+    return s
+}
 
 /**
  * Очень сложная
