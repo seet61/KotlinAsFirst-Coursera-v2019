@@ -2,6 +2,10 @@
 
 package lesson6.task1
 
+import java.text.SimpleDateFormat
+import java.util.*
+
+
 /**
  * Пример
  *
@@ -69,7 +73,28 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    try {
+        println(str)
+        val cal = Calendar.getInstance(Locale("ru"))
+        val date = SimpleDateFormat("dd MMMM yyyy").parse(str)
+        cal.time = date
+        println("date: $date")
+        val dateSplitted = str.split(" ")
+        if (dateSplitted[2].toInt() == 0) {
+            cal.add(Calendar.YEAR, 4)
+        }
+        println(cal.get(Calendar.YEAR))
+        if (cal.get(Calendar.DAY_OF_MONTH) != dateSplitted[0].toInt()) {
+            return ""
+        } else {
+            return String.format("%02d.%02d.%d", dateSplitted[0].toInt(), cal.get(Calendar.MONTH) + 1, dateSplitted[2].toInt())
+        }
+
+    } catch (e: Exception) {
+        return ""
+    }
+}
 
 /**
  * Средняя
@@ -81,7 +106,36 @@ fun dateStrToDigit(str: String): String = TODO()
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    return try {
+        println(digital)
+        val cal = Calendar.getInstance()
+        val date = SimpleDateFormat("dd.MM.yyyy").parse(digital)
+        cal.time = date
+        println("date: $date")
+        val dateSplitted = digital.split(".")
+        if (dateSplitted[2].toInt() == 0) {
+            cal.add(Calendar.YEAR, 4)
+        }
+        println(cal.get(Calendar.YEAR))
+        if ((cal.get(Calendar.DAY_OF_MONTH) != dateSplitted[0].toInt() ||
+                    cal.get(Calendar.YEAR) != dateSplitted[2].toInt() ||
+                    dateSplitted.size > 3) &&
+            dateSplitted[2].toInt() != 0
+        ) {
+            return ""
+        } else {
+            return String.format(
+                "%d %s %d",
+                dateSplitted[0].toInt(),
+                cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale("ru")),
+                dateSplitted[2].toInt()
+            )
+        }
+    } catch (e: Exception) {
+        return ""
+    }
+}
 
 /**
  * Средняя
@@ -97,7 +151,28 @@ fun dateDigitToStr(digital: String): String = TODO()
  *
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String {
+    try {
+        println("phone: $phone")
+        if (phone.contains("()")) {
+            return ""
+        }
+        var plus = false
+        if (phone.contains("+")) {
+            plus = true
+        }
+        println("plus: $plus")
+        val clear = phone.replace(" ", "").replace("+", "").replace("-", "").replace("(", "").replace(")", "")
+        println("clear: $clear")
+        var str = String.format("%d", clear.toBigInteger())
+        if (plus) {
+            str = "+$str"
+        }
+        return str
+    } catch (e: Exception) {
+        return ""
+    }
+}
 
 /**
  * Средняя
